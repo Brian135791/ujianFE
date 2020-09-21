@@ -6,7 +6,8 @@ const INITIAL_STATE={
     isLogin:false,
     error:'',
     isLoading:false,
-    cart:[]
+    cart:[],
+    role:''
 }
 // var obj={
 //     username:'dino',
@@ -27,6 +28,7 @@ const INITIAL_STATE={
 // var obj2={...obj,...{usia:'dasdsad',nama:'bayu'}}// obj2={nama:bayu,usia:dasadasd}
 
 export default (state=INITIAL_STATE,action)=>{
+    console.log(action,"action")
     switch (action.type) {
         case 'LOGIN':        
             return {...state,...action.payload,isLogin:true,isLoading:false,cart:action.cart}
@@ -36,8 +38,11 @@ export default (state=INITIAL_STATE,action)=>{
             return{...state,isLoading:true} 
         case 'CLEAR':
             return{...state,error:''} 
-        case ADDCART:
+        case 'ADDCART':
             return{...state,cart:action.cart}
+        case 'LOGOUT':
+            console.log('Masuk log out')
+            return {...state,username:'',password:'',id:0,isLogin:false,cart:[],role:''}
         default:
             return state
     }

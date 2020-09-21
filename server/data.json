@@ -11,6 +11,18 @@
       "username": "admin",
       "password": "root",
       "role": "admin"
+    },
+    {
+      "username": "brian",
+      "password": "123",
+      "role": "user",
+      "id": 3
+    },
+    {
+      "username": "akira",
+      "password": "salwa",
+      "role": "user",
+      "id": 4
     }
   ],
   "products": [
@@ -61,6 +73,24 @@
     }
   ],
   "carts": [
+    {
+      "userId": 3,
+      "productId": 3,
+      "qty": 1,
+      "id": 1
+    },
+    {
+      "userId": 3,
+      "productId": 3,
+      "qty": 1,
+      "id": 2
+    },
+    {
+      "userId": 3,
+      "productId": 3,
+      "qty": 3,
+      "id": 3
+    }
   ],
   "transactions": [
     {
@@ -78,6 +108,46 @@
       "metode": "upload",
       "buktipembayaran": "https://www.pakaiatm.com/wp-content/uploads/2020/03/Contoh-Bukti-Transfer-BRI-Asli-atau-Palsu.jpg",
       "id": 3
+    },
+    {
+      "status": "Completed",
+      "userId": 1,
+      "tanggalPembayaran": 1600482815951,
+      "metode": "cc",
+      "buktipembayaran": "5000000",
+      "id": 4
+    },
+    {
+      "status": "Completed",
+      "userId": 3,
+      "tanggalPembayaran": 1600498830988,
+      "metode": "cc",
+      "buktipembayaran": "2189312873617",
+      "id": 5
+    },
+    {
+      "status": "Completed",
+      "userId": 3,
+      "tanggalPembayaran": 1600503294191,
+      "metode": "cc",
+      "buktipembayaran": "21312312312",
+      "id": 6
+    },
+    {
+      "status": "Completed",
+      "userId": 3,
+      "tanggalPembayaran": 1600570827457,
+      "metode": "cc",
+      "buktipembayaran": "123178211",
+      "id": 7
+    },
+    {
+      "status": "Completed",
+      "userId": 3,
+      "tanggalPembayaran": 1600671261319,
+      "metode": "cc",
+      "buktipembayaran": "",
+      "id": 8
     }
   ],
   "transactionsdetails": [
@@ -115,6 +185,48 @@
       "price": 999000,
       "qty": 1,
       "id": 7
+    },
+    {
+      "transactionId": 4,
+      "productId": 1,
+      "price": 200000,
+      "qty": 2,
+      "id": 8
+    },
+    {
+      "transactionId": 5,
+      "productId": 3,
+      "price": 200000,
+      "qty": 1,
+      "id": 9
+    },
+    {
+      "transactionId": 5,
+      "productId": 5,
+      "price": 999000,
+      "qty": 1,
+      "id": 10
+    },
+    {
+      "transactionId": 6,
+      "productId": 3,
+      "price": 200000,
+      "qty": 1,
+      "id": 11
+    },
+    {
+      "transactionId": 7,
+      "productId": 1,
+      "price": 200000,
+      "qty": 1,
+      "id": 12
+    },
+    {
+      "transactionId": 8,
+      "productId": 1,
+      "price": 200000,
+      "qty": 1,
+      "id": 13
     }
   ]
 }

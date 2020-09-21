@@ -19,12 +19,14 @@ class DetailProd extends Component {
 
     componentDidMount(){
         Axios.get(`${API_URL}/products/${this.props.match.params.id}`)
+     
         .then((res)=>{
             this.setState({products:res.data,loading:false})
         }).catch((err)=>{
             console.log(err)
         })
     }
+    
 
     onAddToCart=()=>{
         if(this.props.role==='admin'){

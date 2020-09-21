@@ -1,11 +1,27 @@
 import Axios from 'axios'
 import { API_URL } from '../../helpers/idrformat'
 import {ADDCART} from './../Type'
+
+
+export const RegFunc=(obj)=>{
+    return {
+        type:'REGISTER',
+        payload:obj
+    }
+}
+
 export const LoginFunc=(user,cart)=>{
     return{
         type:'LOGIN',
         payload:user,
         cart:cart
+    }
+}
+
+export const LogoutFunc=()=>{
+    console.log('masuk sini ga')
+    return {
+        type:'LOGOUT'
     }
 }
 
@@ -18,7 +34,7 @@ export const Clearfunc=()=>{
 
 export const AddcartAction=(cart)=>{
     return{
-        type:ADDCART,
+        type:'ADDCART',
         cart:cart
     }
 }

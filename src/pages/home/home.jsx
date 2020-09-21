@@ -17,12 +17,12 @@ class Home extends Component {
                 </div>
                 <div className='text-white d-flex align-items-center px-5' style={{height:'8vh',backgroundColor:'#afafaf',justifyContent:"space-between"}}>
                     <div>
-                        promo    
+                        Produk    
                     </div> 
                     <div>
                         <Link to='/products'>
                             <ButtonUi>
-                                Lihat Promo
+                                Lihat Produk
                             </ButtonUi>
                         </Link>
                     </div>

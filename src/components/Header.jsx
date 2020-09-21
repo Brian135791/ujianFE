@@ -12,6 +12,13 @@ import {FaUserAstronaut,FaCartArrowDown} from 'react-icons/fa'
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Badge from '@material-ui/core/Badge';
+import {withRouter} from 'react-router-dom'
+import {LogoutFunc, SearchInput} from './../redux/Actions'
+import Swal from 'sweetalert2'
+import {Input, Dropdown, DropdownToggle, DropdownMenu, DropdownItem} from 'reactstrap'
+import { ImSearch } from "react-icons/im";
+import { API_URL } from '../helpers/idrformat';
+import Searchreducers from '../redux/reducers/Searchreducers';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,10 +45,94 @@ const StyledBadge = withStyles(() => ({
     padding: '0 0px',
   },
 }))(Badge);
-function ButtonAppBar({username,isLogin,role,cart}) {
+function ButtonAppBar({username,isLogin,role,cart,searchInput, LogoutFunc,history,SearchInput}) {
   const classes = useStyles();
   const [anchorEl,setopen]=useState(null)
+  const [search,searchChange]=useState('')
+  const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+      confirmButton: 'btn btn-success',
+      cancelButton: 'btn btn-danger'
+    },
+    buttonsStyling: false
+  })
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
+  const toggle = () => setDropdownOpen(prevState => !prevState);
+      
+
+const onLogoutClick = ()=>{
+  
+    swalWithBootstrapButtons.fire({
+      title: 'Are you sure?',
+      text: "yakin mau Log out!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'iya Log out!',
+      cancelButtonText: 'ga jadi, cancel!',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        LogoutFunc()
+        localStorage.clear()
+        history.push('/')
+        
+      }
+    })
+    
+    
+}
+
+
+const onChangePasswordClick = ()=> {
+  Swal.mixin({
+    input: 'text',
+    confirmButtonText: 'Next &rarr;',
+    showCancelButton: true,
+    progressSteps: ['1', '2', '3']
+  }).queue([
+    {
+      title: 'password lama',
+      text: 'silahkan masukkan password lama'
+    },
+    'masukkan password baru',
+    'confirmasi password baru'
+  ]).then((result) => {
+    if (result.value) {
+      const answers = JSON.stringify(result.value)
+      Swal.fire({
+        title: 'All done!',
+        // html: `
+        //   Your answers:
+        //   <pre><code>${answers}</code></pre>
+        // `,
+        confirmButtonText: 'selesai dan sukses!'
+      })
+    }
+  })
+}
+
+const handleSearchInput=(e)=>{
+  searchChange(e.target.value)
+}
+
+const handleSearchClick = () => {
+  SearchInput(search)
+
+}
+
+// const renderDropdownCart=()=>{
+//   return {
+//     cart.product.gambar,
+//     cart.product.namatrip,
+
+//   }
+// }
+
+
+console.log(searchInput)
+console.log('search',search)
+console.log('cart',cart)
   return (
     <div className={classes.root}>
       <AppBar className={classes.warna} position='static'>
@@ -54,6 +145,14 @@ function ButtonAppBar({username,isLogin,role,cart}) {
           <Typography variant="h6" className={classes.title}>
             JoinTrip
           </Typography>
+          <Typography style={{display:'flex', alignItems:'center'}} variant="h6" className={classes.title}>
+            <Input style={{width: '400px'}} value={search} onChange={handleSearchInput}  type="text" name="search" placeholder="Search" />
+            
+              <ImSearch onClick={handleSearchClick}/>
+           
+          </Typography>
+
+          
           {
             role==='admin'?
             <Link to='/manageAdmin' style={{textDecoration:'none',color:'white'}}>
@@ -61,21 +160,38 @@ function ButtonAppBar({username,isLogin,role,cart}) {
             </Link>
             :
             role==='user'?
-            <Link to='/cart' style={{textDecoration:'none',color:'white'}}>
-              <Button color="inherit">
-                <StyledBadge badgeContent={cart.length} oolor='secondary' >
-                  <span style={{fontSize:20}}>
-                    <FaCartArrowDown />
-                  </span>
-                </StyledBadge>
-              </Button>
-            </Link>
+            <Dropdown isOpen={dropdownOpen} toggle={toggle}>
+              <DropdownToggle caret>
+                  <StyledBadge badgeContent={cart.length} color='secondary' >
+                      <FaCartArrowDown/>
+                  </StyledBadge>
+              </DropdownToggle>
+              <DropdownMenu>
+                
+                <DropdownItem>{cart.length}</DropdownItem>               
+                  <DropdownItem divider />
+                <Link to='/cart' style={{ textDecoration:'none',color:'white'}}>
+                  <DropdownItem>Go to Cart</DropdownItem>
+                </Link>
+
+              </DropdownMenu>
+            </Dropdown>
+            // <Link to='/cart' style={{ textDecoration:'none',color:'white'}}>
+              // <Button color="inherit">
+              //   <StyledBadge badgeContent={cart.length} color='secondary' >
+              //     <span style={{fontSize:20}}>
+              //       <FaCartArrowDown />
+              //     </span>
+              //   </StyledBadge>
+              // </Button>
+            // </Link>
             :
             null
           }
           {
             isLogin?
             <>
+
               <Button color="inherit" onClick={(e)=>setopen(e.currentTarget)}><FaUserAstronaut/>&nbsp;{username}</Button>
               <Menu
                 // id="simple-menu"
@@ -86,14 +202,19 @@ function ButtonAppBar({username,isLogin,role,cart}) {
                 // onClose={handleClose}
               >
                 <MenuItem >Profile</MenuItem>
-                <MenuItem >My account</MenuItem>
-                <MenuItem >Logout</MenuItem>
+                <MenuItem onClick={onChangePasswordClick}>change Password</MenuItem>
+                <MenuItem onClick={onLogoutClick}>Logout</MenuItem>
               </Menu>
             </>
             :
-            <Link to='/login' style={{textDecoration:'none',color:'white'}}>
-              <Button color="inherit">Login</Button>
+            <>
+            <Link to='/register' style={{textDecoration:'none',color:'white'}}>
+              <Button color="inherit">Register</Button>
             </Link>
+            <Link to='/login' style={{textDecoration:'none',color:'white'}}>
+              <Button color="inherit">Log In</Button>
+            </Link>
+            </>
           }
         </Toolbar>
       </AppBar>
@@ -101,9 +222,12 @@ function ButtonAppBar({username,isLogin,role,cart}) {
   );
 }
 
-const MapstatetoProps=({Auth})=>{
+const MapstatetoProps=({Auth,Search})=>{
   return {
-    ...Auth
+    ...Auth,
+    ...Search
   }
 }
-export default connect(MapstatetoProps)(ButtonAppBar);
+
+
+export default withRouter(connect(MapstatetoProps,{LogoutFunc,SearchInput})(ButtonAppBar));

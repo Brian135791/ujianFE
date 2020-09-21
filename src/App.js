@@ -5,6 +5,7 @@ import {Loading} from './components'
 import ManageAdmin from './pages/admin/admin'
 import ListProd from './pages/Listprod'
 import NotFound from './pages/notfound'
+import Register from './pages/register'
 import {Switch,Route} from 'react-router-dom'
 import Login from './pages/Login/Login'
 import {connect} from 'react-redux'
@@ -15,6 +16,7 @@ import Cart from './pages/cart'
 import DetailProd from './pages/detailprod'
 import {toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css' 
+import Search from './pages/Search'
 // umum : register
 // user : history,
 // admin :confirm admin,
@@ -71,6 +73,8 @@ function App(props) {
         <Route exact path='/products' component={ListProd}/>
         <Route path='/products/:id' component={DetailProd}/>
         <Route exact path='/cart' component={Cart}/>
+        <Route exact path='/register' component={Register} />
+        <Route exact path='/search' component={Search}/>
         {renderProtectedroutesadmin()}
         <Route path='*' component={NotFound} />
       </Switch>

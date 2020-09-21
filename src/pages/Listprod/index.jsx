@@ -6,6 +6,8 @@ import {
 import Axios from 'axios'
 import {Link} from 'react-router-dom'
 import { API_URL,priceFormatter } from '../../helpers/idrformat';
+
+
 class ListProd extends Component {
     state = {
         Products:[]
